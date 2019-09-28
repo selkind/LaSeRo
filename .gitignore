@@ -1,2 +1,4 @@
 *.swp
 *.txt
+.idea/*
+venv/*
