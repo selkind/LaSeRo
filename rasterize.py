@@ -50,14 +50,15 @@ def rasterize_label(raster_path, vector_path, label_path):
     gdal.RasterizeLayer(label_raster, [1], vector_layer, options=["ATTRIBUTE=GRIDCODE"])
 
 
-img_paths = get_image_paths(img_src_dir)
-vector_paths = get_vector_paths(vector_src_dir)
+if __name__ == "__main__":
+    img_paths = get_image_paths(img_src_dir)
+    vector_paths = get_vector_paths(vector_src_dir)
 
-test_img_path = img_paths[list(img_paths.keys())[0]][0]
+    test_img_path = img_paths[list(img_paths.keys())[0]][0]
 
-test_vector_path = vector_paths[0]
+    test_vector_path = vector_paths[0]
 
-test_label_path = label_src_dir + list(img_paths.keys())[0] + "_label.tif"
+    test_label_path = label_src_dir + list(img_paths.keys())[0] + "_label.tif"
 
-rasterize_label(test_img_path, test_vector_path, test_label_path)
+    rasterize_label(test_img_path, test_vector_path, test_label_path)
 
