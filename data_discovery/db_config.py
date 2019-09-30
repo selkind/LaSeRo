@@ -27,6 +27,12 @@ class LandsatDBCreator:
         cursor.execute(self.SCENE_ID_TABLE)
         self.con.commit()
 
+    def create_metadata_table(self, headers):
+        metadata_table_query = """
+                                CREATE TABLE metadata
+                                (?,?,?,?,?,?,?)
+                              """
+
 
 if __name__ == "__main__":
     db_dir = "/home/dsa/DSA/db/Image_IDs.db"

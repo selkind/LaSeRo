@@ -9,6 +9,12 @@ def load_scene_id_file(path, delimiter):
     return data
 
 
+def load_headers(path, delimiter):
+    with open(path, "r") as f:
+        reader = csv.reader(f, delimiter=delimiter)
+        return next(reader, None)
+
+
 """
 Takes array of data loaded from Burton-Johnson scene id file
 available in the supplementary material
@@ -32,15 +38,29 @@ def populate_scene_id_table(db_manager, data):
     db_manager.con.commit()
 
 
-if __name__ == "__main__":
-    scene_id_path = "/home/dsa/DSA/tc-10-1665-2016-supplement/Supplementary Material/Burton_Johnson_Tile_IDs.txt"
-    db_dir = "/home/dsa/DSA/db/Image_IDs.db"
-    scene_db_manager = LandsatDBCreator(db_dir)
+def initialize_db(path):
+    scene_db_manager = LandsatDBCreator(path)
     scene_db_manager.initialize_connection()
     scene_db_manager.initalize_cursor()
+    return scene_db_manager
 
-    scenes = load_scene_id_file(scene_id_path, '\t')
+
+def load_data(scene_id_file_path, metadata_file_path, db_path):
+    scenes = load_scene_id_file(scene_id_file_path, '\t')
+    scene_db = initialize_db(db_path)
 
     # omit header line from insert statement
-    populate_scene_id_table(scene_db_manager, scenes[1:])
+    populate_scene_id_table(scene_db, scenes[1:])
+
+
+if __name__ == "__main__":
+    base_dir = "/home/dsa/DSA/"
+    scene_id_path = base_dir + "tc-10-1665-2016-supplement/Supplementary Material/Burton_Johnson_Tile_IDs.txt"
+    db_dir = base_dir + "db/Image_IDs.db"
+    metadata_path = base_dir + "LANDSAT_8_C1.csv"
+    headers = load_headers(metadata_path, ',')
+    print(len(headers))
+
+    # load_data(scene_id_path, None, db_dir)
+
 
