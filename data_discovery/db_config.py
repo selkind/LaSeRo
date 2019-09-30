@@ -27,11 +27,13 @@ class LandsatDBCreator:
         cursor.execute(self.SCENE_ID_TABLE)
         self.con.commit()
 
-    def create_metadata_table(self, headers):
+    def create_table_from_headers(self, headers):
         metadata_table_query = """
                                 CREATE TABLE metadata
-                                (?,?,?,?,?,?,?)
+                                (
                               """
+        for i in headers:
+            metadata_table_query += ","
 
 
 if __name__ == "__main__":
