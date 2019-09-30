@@ -3,7 +3,7 @@ import sqlite3
 
 class LandsatDBCreator:
     SCENE_ID_TABLE = "CREATE TABLE scene_ids(scene text PRIMARY KEY," \
-                     " WRS_Path integer, WRS_Row integer, Date DATE, TIME TIME, Solar_Azimuth FLOAT, " \
+                     " WRS_Path integer, WRS_Row integer, Date DATE, Time TIME, Solar_Azimuth FLOAT, " \
                      "Solar_Elev FLOAT, Cloud_Cover FLOAT)"
 
     def __init__(self, database_path):
@@ -34,11 +34,9 @@ if __name__ == "__main__":
     db_manager.initialize_connection()
     db_manager.initalize_cursor()
     # db_manager.create_table(db_manager.SCENE_ID_TABLE)
-    """
     db_manager.cursor.execute("SELECT name FROM sqlite_master WHERE type = 'table'")
     table_query = db_manager.cursor.fetchall()
     for row in table_query:
         print(row)
-    """
 
 
