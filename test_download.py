@@ -26,6 +26,8 @@ if __name__ == "__main__":
     usgs_key = load_api_key(key_store_path + usgs_key_file)
 
     db = LandsatDBCreator(data_dir_path + db_path)
-    print(db.initialize_connection())
-    downloader = Downloader(download_dir=data_dir_path + img_dir_path)
-    print(downloader.download_dir)
+    db.initialize_connection()
+    db.initalize_cursor()
+
+    downloader = Downloader(download_dir=data_dir_path + img_dir_path, usgs_user=usgs_key[0], usgs_pass=usgs_key[1])
+    print(downloader.usgs_user)
