@@ -1,5 +1,6 @@
 *.swp
 *.txt
+!requirements.txt
 .idea/*
 venv/*
 data_discovery/__pycache__/*
