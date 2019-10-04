@@ -29,5 +29,13 @@ if __name__ == "__main__":
     db.initialize_connection()
     db.initalize_cursor()
 
+    scene_id_query = """
+                    SELECT ID FROM
+                    scene_ids
+                    LIMIT 1
+                     """
+    db.cursor.execute(scene_id_query)
+
+    test_scene_id = db.cursor.fetchone()[0]
+
     downloader = Downloader(download_dir=data_dir_path + img_dir_path, usgs_user=usgs_key[0], usgs_pass=usgs_key[1])
-    print(downloader.usgs_user)
