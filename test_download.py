@@ -16,28 +16,30 @@ def load_api_key(path):
 
 
 if __name__ == "__main__":
-    key_store_path = "/home/dsa/Documents/project/lasero/keys/"
-    usgs_key_file = "usgs.key"
 
-    data_dir_path = "/home/dsa/DSA/"
-    db_path = "db/Image_IDs.db"
-    img_dir_path = "images"
+    data_dir_path = "/proj/DBCal/"
+    img_dir_path = "landsat_images"
 
-    usgs_key = load_api_key(key_store_path + usgs_key_file)
+    db_path = "/users/dibu25/workspace/img_metadata/scenes.db"
 
-    db = LandsatDBCreator(data_dir_path + db_path)
-    db.initialize_connection()
+    db = LandsatDBCreator(db_path)
     db.initalize_cursor()
 
     scene_id_query = """
                     SELECT ID FROM
                     scene_ids
                     LIMIT 1
-                     """
+			"""
+
     db.cursor.execute(scene_id_query)
 
-    test_scene_id = db.cursor.fetchone()[0]
 
-    downloader = Downloader(download_dir=data_dir_path + img_dir_path, usgs_user=usgs_key[0], usgs_pass=usgs_key[1])
+
+
+    test_scene_id = db.cursor.fetchone()[0]
+    print(test_scene_id)
+    data_dir_path = "/proj/DBCal/"
+    img_dir_path = "landsat_images"
+    downloader = Downloader(download_dir=data_dir_path + img_dir_path)
 
     # downloader.download([test_scene_id], bands=[1])
