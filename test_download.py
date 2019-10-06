@@ -37,6 +37,7 @@ if __name__ == "__main__":
 
 
     test_scene_id = db.cursor.fetchone()[0]
+    print(test_scene_id)
     data_dir_path = "/proj/DBCal/"
     img_dir_path = "landsat_images"
     downloader = Downloader(download_dir=data_dir_path + img_dir_path)
