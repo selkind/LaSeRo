@@ -40,4 +40,4 @@ if __name__ == "__main__":
 
     downloader = Downloader(download_dir=data_dir_path + img_dir_path, usgs_user=usgs_key[0], usgs_pass=usgs_key[1])
 
-    # downloader.download([test_scene_id], bands=[1])
+    downloader.download([test_scene_id])

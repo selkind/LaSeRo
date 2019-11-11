@@ -41,7 +41,7 @@ def populate_scene_id_table(db_manager, data):
 def initialize_db(path):
     scene_db_manager = LandsatDBCreator(path)
     scene_db_manager.initialize_connection()
-    scene_db_manager.initalize_cursor()
+    scene_db_manager.initialize_cursor()
     return scene_db_manager
 
 

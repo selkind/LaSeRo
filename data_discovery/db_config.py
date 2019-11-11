@@ -19,7 +19,7 @@ class LandsatDBCreator:
             print(e)
             return False
 
-    def initalize_cursor(self):
+    def initialize_cursor(self):
         self.cursor = self.con.cursor()
 
     def create_table(self, table_query):
