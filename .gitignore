@@ -6,3 +6,5 @@ venv/*
 data_discovery/__pycache__/*
 keys/*
 *.key
+__pycache__/*
+.ipynb_checkpoints/*
