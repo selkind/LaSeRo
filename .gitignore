@@ -3,7 +3,7 @@
 !requirements.txt
 .idea/*
 venv/*
-data_discovery/__pycache__/*
+**/__pycache__/*
 keys/*
 *.key
 __pycache__/*
