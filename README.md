@@ -16,4 +16,7 @@ and TOA brightness temperature values using the formulae described [here](https:
 3. Generate labels for each Landsat scene by converting feature shapefiles into raster layers. A tool to burn shapefile features into a raster that has the same spatial extent of any downloaded scene. These rasterized features serve as labels of the Segnet training data. The rasterize function is located in data_preprocessing/utils/raster_tools.py
 4. Combine all band TIFs from a scene into a stacked numpy array and break the stack and label layer into chunks of 512 X 512 pixels and save them as pickled .npy files. A function to do this step is in data_preprocessing/utils/raster_tools.py.
 
-### Once the scenes are stacked and chunked into .npy files, they are ready for model training.
+#### Once the scenes are stacked and chunked into .npy files, they are ready for model training.
+
+### The training steps are:
+1. Generate a model data text file that contains all paths to the chunks that will be used for training.
