@@ -9,3 +9,4 @@ keys/*
 __pycache__/*
 .ipynb_checkpoints/*
 *.tar.bz
+!metadata/**
