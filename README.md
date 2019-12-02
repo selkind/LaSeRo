@@ -35,3 +35,20 @@ and TOA brightness temperature values using the formulae described [here](https:
   #### A trained model must be evaluated for accuracy by comparing outputs to the ground truth layers created and provided by Burton-Johnson et. al., 2016
   
 ### The model evaluation steps are:
+1. Generate model output on all scenes listed in metadata/qc_ids.txt using the predictor notebook in colab_notebooks/predictor.ipynb. The several variables defined in the configuration cell of this notebook must match the variables as they were defined in the model training notebook. (these change for different models). The specific vars are: 
+  - best_model (this is the name of the model you want to generate output for)
+  - num_classes
+  - image_shape
+  - set_info
+  - Also note that test_set_size must be 1709 (the number of chunks in the scenes listed in qc_ids.txt.
+  2. Use the predictor notebook to save the output of the model as binary rasters in the output directory.
+  3. Use the predictor notebook to generate statistics on the output by comparing the output to 10 manually labeled areas (Created by Burton-Johnson et. al., 2016.
+  4. Save the generated statistics as JSON files in the results directory.
+  5. Use the notebook colab_notebooks/model_assessment.ipynb to visualize the output from the predictor notebook. These include visualizations of:
+  - The input band data
+  - the band combinations used to generate the labels (methodology by Burton-Johnson et. al., 2016)
+  - differences between the model output and the manual labels overlaid on a full color image of the area for qualitative analysis.
+  6. Use the model_assessment notebook to plot each scene in terms of an accuracy metric (e.g. rock commission error) vs. an image condition (e.g. sun elevation at time of scene capture).
+
+
+## Programming Environment Description
