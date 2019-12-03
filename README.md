@@ -52,3 +52,9 @@ and TOA brightness temperature values using the formulae described [here](https:
 
 
 ## Programming Environment Description
+Currently two different computing environments are needed. One environment for the data acquisition and pre-processing steps, and Google Colab for the model training, scene prediction output, and model evaluation. It is likely that the data acquisition and pre-processing steps will work on Google Colab, but it has not yet been tested. The current workflow for this framework is as follows:
+1. Download and pre-process Landsat 8 scenes in Google Cloud or on a local computer with enough storage capacity for your selected scenes.
+- A single scene is ~1GB if all bands are included. The corrected bands will take up another ~1GB and the stacked chunks and labels will take up another ~1GB. (roughly 3GB/ scene once all pre-processing steps have been completed).
+2. Transfer your stacked chunks and labels to a Google Drive so they can be mounted to Google Colab machines. This is the best way to deal with data IO when working in Google Colab.
+3. Train, evaluate, and analyze models in Google Colab.
+
