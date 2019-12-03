@@ -7,6 +7,6 @@ venv/*
 keys/*
 *.key
 __pycache__/*
-.ipynb_checkpoints/*
+.ipynb_checkpoints/**
 *.tar.bz
 !metadata/**
