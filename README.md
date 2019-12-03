@@ -13,7 +13,16 @@ for training with a Segnet semantic segmentation model.
  **This repository is due to be deprecated soon. We are only using a single component of it, so we have included that component directly in this repository in [this directory](https://github.com/selkind/LaSeRo/tree/master/data_preprocessing/landsat_download)**
 2. (Optional) Correct the raw DN values and brightness temperature values in each scene to TOA reflectance
 and TOA brightness temperature values using the formulae described [here](https://www.usgs.gov/land-resources/nli/landsat/using-usgs-landsat-level-1-data-product)
-3. Generate labels for each Landsat scene by converting feature shapefiles into raster layers. A tool to burn shapefile features into a raster that has the same spatial extent of any downloaded scene. These rasterized features serve as labels of the Segnet training data. The rasterize function is located in data_preprocessing/utils/raster_tools.py
+3. Generate labels for each Landsat scene by converting feature shapefiles into raster layers. 
+  - A tool to burn shapefile features into a raster that has the same spatial extent of any downloaded scene. 
+  - These rasterized features serve as labels of the Segnet training data.
+  - The rasterize function is located in data_preprocessing/utils/raster_tools.py 
+  - The label shapefile currently in use is a product created by the British Antarctic Survey. The methodology for creating this layer is described in:
+  
+  Burton-Johnson, A., Black, M., Fretwell, P. T., and Kaluza-Gilbert, J.: An automated methodology for differentiating rock from snow, clouds and sea in Antarctica from Landsat 8 imagery: a new rock outcrop map and area estimation for the entire Antarctic continent, The Cryosphere, 10, 1665–1677, https://doi.org/10.5194/tc-10-1665-2016, 2016. 
+  
+  - Any work using this layer as a training label must reference the publication above.
+  
 4. Combine all band TIFs from a scene into a stacked numpy array and break the stack and label layer into chunks of 512 X 512 pixels and save them as pickled .npy files. A function to do this step is in data_preprocessing/utils/raster_tools.py.
 
 #### Once the scenes are stacked and chunked into .npy files, they are ready for model training.
