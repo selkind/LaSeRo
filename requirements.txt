@@ -7,7 +7,7 @@ chardet==3.0.4
 Click==7.0
 command-not-found==0.3
 conda==4.3.16
-cryptography==2.1.4
+cryptography==2.3
 cupshelpers==1.0
 cycler==0.10.0
 dask==2.5.0
