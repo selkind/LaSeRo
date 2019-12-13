@@ -55,7 +55,7 @@ python-dateutil==2.5.1
 python-debian==0.1.32
 pytz==2019.2
 pyxdg==0.26
-PyYAML==3.12
+PyYAML==5.1
 ratelim==0.1.6
 reportlab==3.4.0
 requests==2.7.0
