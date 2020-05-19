@@ -67,7 +67,7 @@ class TestRegion:
         for i in range(row_range[0], row_range[1] + 1):
             row = []
             for j in range(col_range[0], col_range[1] + 1):
-                row.append(np.load(os.path.join(raster_source_dir, "chunk_{}_{}{}.npy".format(i, j, source_suffix))))
+                row.append(np.load(os.path.join(raster_source_dir, "chunk_{}_{}_{}.npy".format(i, j, source_suffix))))
             
             mosaic_rows.append(np.concatenate(tuple(row), axis=1))
         
