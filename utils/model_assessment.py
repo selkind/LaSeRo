@@ -1,4 +1,5 @@
 import os
+import json
 
 import numpy as np
 
@@ -38,22 +39,39 @@ def calculate_results(diff_histogram):
 
     return stats
 
+class TestRegion:
+    def __init__(self, test_region_window_path, groundtruth_source_dir='/content/drive/My Drive/qc/manual_labels'):
+        self.window_path = test_region_window_path
+        self.window = self.load_window(self.window_path)
 
-def assemble_test_region_mosaic(raster_source_dir, test_region_window, source_suffix='output'):
-    row_vals = [i[0] for i in test_region_window['chunks']]
-    col_vals = [i[1] for i in test_region_window['chunks']]
-    row_range = (min(row_vals), max(row_vals))
-    col_range = (min(col_vals), max(col_vals))
-   
-    mosaic_rows = []
-    for i in range(row_range[0], row_range[1] + 1):
-        row = []
-        for j in range(col_range[0], col_range[1] + 1):
-            row.append(np.load(os.path.join(raster_source_dir, "chunk_{}_{}{}.npy".format(i, j, source_suffix))))
+        self.groundtruth_source_dir = groundtruth_source_dir
+        self.groundtruth = {}
+
+    @staticmethod
+    def load_window(path):
+        with open(path, 'r') as f:
+            return json.load(f)
+
+    def load_groundtruth(self):
+        for i in self.window:
+            self.groundtruth[i] = np.load(os.path.join(self.groundtruth_source_dir, f'{i}_man.npy'))
+
+
+    def assemble_test_region_mosaic(self, raster_source_dir, test_region_window, source_suffix='output'):
+        row_vals = [i[0] for i in test_region_window['chunks']]
+        col_vals = [i[1] for i in test_region_window['chunks']]
+        row_range = (min(row_vals), max(row_vals))
+        col_range = (min(col_vals), max(col_vals))
+    
+        mosaic_rows = []
+        for i in range(row_range[0], row_range[1] + 1):
+            row = []
+            for j in range(col_range[0], col_range[1] + 1):
+                row.append(np.load(os.path.join(raster_source_dir, "chunk_{}_{}{}.npy".format(i, j, source_suffix))))
+            
+            mosaic_rows.append(np.concatenate(tuple(row), axis=1))
         
-        mosaic_rows.append(np.concatenate(tuple(row), axis=1))
-    
-    mosaic = np.concatenate(tuple(mosaic_rows), axis=0)
-    
-    return mosaic[test_region_window["row"]: test_region_window["row"] + test_region_window["height"],
-                            test_region_window["col"]: test_region_window["col"] + test_region_window["width"]]
+        mosaic = np.concatenate(tuple(mosaic_rows), axis=0)
+        
+        return mosaic[test_region_window["row"]: test_region_window["row"] + test_region_window["height"],
+                                test_region_window["col"]: test_region_window["col"] + test_region_window["width"]]
