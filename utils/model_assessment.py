@@ -46,6 +46,7 @@ class TestRegion:
 
         self.groundtruth_source_dir = groundtruth_source_dir
         self.groundtruth = {}
+        self.groundtruth_class_count = None
 
     @staticmethod
     def load_window(path):
@@ -53,8 +54,12 @@ class TestRegion:
             return json.load(f)
 
     def load_groundtruth(self):
+        groundtruth_class_max = 0
         for i in self.window:
             self.groundtruth[i] = np.load(os.path.join(self.groundtruth_source_dir, f'{i}_man.npy'))
+            groundtruth_class_max = max(groundtruth_class_max, len(np.unique(self.groundtruth[i])))
+        self.groundtruth_class_count = groundtruth_class_max
+
 
 
     def assemble_test_region_mosaic(self, raster_source_dir, test_region_window, source_suffix='output'):
@@ -97,3 +102,17 @@ class TestRegion:
 
         return mosaics
 
+
+    def generate_diffs(self, output_mosaics):
+        diffs = {}
+        for i in output_mosaics:
+            diffs[i] = self.groundtruth[i] + (output_mosaics[i] * self.groundtruth_class_count)
+
+        return diffs
+
+
+    def generate_diff_histograms(self, diff_rasters):
+        diff_hists = {}
+        for i in diff_rasters:
+            diff_hists[i] = np.histogram(diff_rasters[i], bins=list(range((self.groundtruth_class_count * 2) + 1)))[0]
+        return diff_hists
