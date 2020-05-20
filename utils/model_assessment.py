@@ -3,6 +3,7 @@ import json
 
 import numpy as np
 import rasterio
+import rasterio.features
 import geopandas as gpd
 
 
