@@ -62,7 +62,7 @@ class TestRegion:
 
 
 
-    def assemble_test_region_mosaic(self, raster_source_dir, test_region_window, source_suffix='output'):
+    def assemble_test_region_mosaic(self, raster_source_dir, test_region_window, source_suffix='_output'):
         row_vals = [i[0] for i in test_region_window['chunks']]
         col_vals = [i[1] for i in test_region_window['chunks']]
         row_range = (min(row_vals), max(row_vals))
@@ -72,7 +72,7 @@ class TestRegion:
         for i in range(row_range[0], row_range[1] + 1):
             row = []
             for j in range(col_range[0], col_range[1] + 1):
-                row.append(np.load(os.path.join(raster_source_dir, "chunk_{}_{}_{}.npy".format(i, j, source_suffix))))
+                row.append(np.load(os.path.join(raster_source_dir, "chunk_{}_{}{}.npy".format(i, j, source_suffix))))
             
             mosaic_rows.append(np.concatenate(tuple(row), axis=1))
         
