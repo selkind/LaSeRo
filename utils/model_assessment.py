@@ -125,7 +125,7 @@ class TestRegion:
             fn = []
             fp = []
             tp = []
-            for geometry, raster_value in shapes(image):
+            for geometry, raster_value in rasterio.features.shapes(image):
                 shape = {'properties': {'raster_value': raster_value}, 'geometry': geometry}
                 if raster_value == 0:
                     tn.append(shape)
