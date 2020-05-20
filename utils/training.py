@@ -1,4 +1,5 @@
 import os
+import csv
 
 def create_session_paths(session_name, base_dir='/content/drive/My Drive'):
     models_dir = os.path.join(base_dir, 'models')
@@ -18,3 +19,7 @@ def create_session_paths(session_name, base_dir='/content/drive/My Drive'):
             'logs': training_log,
             'config': training_config,
             'classification_report': classification_report}
+
+def get_image_list(metadata_file_path):
+    with open(metadata_file_path, 'r') as f:
+        return [i for i in csv.reader(f) if i]
