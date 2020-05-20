@@ -39,7 +39,11 @@ def calculate_results(diff_histogram):
 
     return stats
 
+
 class TestRegion:
+    """
+    This class is a singleton-pattern mess that needs to be refactored eventually
+    """
     def __init__(self, test_region_window_path, groundtruth_source_dir='/content/drive/My Drive/qc/manual_labels'):
         self.window_path = test_region_window_path
         self.window = self.load_window(self.window_path)
@@ -60,8 +64,6 @@ class TestRegion:
             groundtruth_class_max = max(groundtruth_class_max, len(np.unique(self.groundtruth[i])))
         self.groundtruth_class_count = groundtruth_class_max
 
-
-
     def assemble_test_region_mosaic(self, raster_source_dir, test_region_window, source_suffix='_output'):
         row_vals = [i[0] for i in test_region_window['chunks']]
         col_vals = [i[1] for i in test_region_window['chunks']]
@@ -80,7 +82,6 @@ class TestRegion:
         
         return mosaic[test_region_window["row"]: test_region_window["row"] + test_region_window["height"],
                                 test_region_window["col"]: test_region_window["col"] + test_region_window["width"]]
-
 
     def load_output_mosaics(self, output_dir):
         """
@@ -102,14 +103,12 @@ class TestRegion:
 
         return mosaics
 
-
     def generate_diffs(self, output_mosaics):
         diffs = {}
         for i in output_mosaics:
             diffs[i] = self.groundtruth[i] + (output_mosaics[i] * self.groundtruth_class_count)
 
         return diffs
-
 
     def generate_diff_histograms(self, diff_rasters):
         diff_hists = {}
