@@ -2,6 +2,8 @@ import os
 import json
 
 import numpy as np
+import rasterio
+import geopandas as gpd
 
 
 def calculate_results(diff_histogram):
@@ -115,3 +117,29 @@ class TestRegion:
         for i in diff_rasters:
             diff_hists[i] = np.histogram(diff_rasters[i], bins=list(range((self.groundtruth_class_count * 2) + 1)))[0]
         return diff_hists
+
+    def generate_shapes_from_diff(self, diff):
+        with rasterio.Env():
+            image = diff.astype('int16')
+            tn = []
+            fn = []
+            fp = []
+            tp = []
+            for geometry, raster_value in shapes(image):
+                shape = {'properties': {'raster_value': raster_value}, 'geometry': geometry}
+                if raster_value == 0:
+                    tn.append(shape)
+                if raster_value == 1:
+                    fn.append(shape)
+                if raster_value == 2:
+                    fp.append(shape)
+                if raster_value == 3:
+                    tp.append(shape)
+
+        result = {}
+        result['true_negatives'] = gpd.GeoDataFrame.from_features(tn)
+        result['false_negatives'] = gpd.GeoDataFrame.from_features(fn)
+        result['false_positives'] = gpd.GeoDataFrame.from_features(fp)
+        result['true_positives'] = gpd.GeoDataFrame.from_features(tp)
+        return result
+
