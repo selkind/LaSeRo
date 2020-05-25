@@ -27,7 +27,7 @@ class SessionManager:
         return f'lrmonitor={lr_monitor_metric}_factor={factor}_patience={lr_patience}_min={min_lr}_'
     
     def build_stop_components(self, stop_monitor_metric, stop_patience):
-        return f'stop_monitor={stop_monitor_metric}_patience={stop_patience}'
+        return f'stopmonitor={stop_monitor_metric}_patience={stop_patience}'
 
     def parse_component(self, component):
         attributes = component.split("=")
