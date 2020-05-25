@@ -1,6 +1,47 @@
 import os
 import csv
 
+
+class SessionManager:
+    def __init__(self, base_dir):
+        self.base_dir = base_dir
+        self.model_dir = os.path.join(base_dir, 'model')
+        self.metadata_dir = os.path.join(base_dir, 'Metadata')
+        
+    def build_input_components(self, data_set, bands, weights):
+        return f'data_set={data_set}_bands={self.build_band_string(bands)}_weights={weights}'
+
+    def build_band_string(self, bands):
+        band_string = ''
+        for i in bands:
+            band_string += f'{i}-'
+        return band_string
+
+    def build_opt_components(self, opt_name, loss_function, learning_rate):
+        return f'opt={opt_name}_loss={loss_function}_lr={learning_rate}'
+
+    def build_training_components(self, batch_size, epochs):
+        return f'batch={batch_size}_epochs={epochs}_'
+
+    def build_lr_monitor_components(self, lr_monitor_metric, factor, lr_patience, min_lr):
+        return f'lrmonitor={lr_monitor_metric}_factor={factor}_patience={lr_patience}_min={min_lr}_'
+    
+    def build_stop_components(self, stop_monitor_metric, stop_patience):
+        retur f'stop_monitor={stop_monitor_metric}_patience={stop_patience}'
+
+    def parse_component(self, component):
+        attributes = component.split("=")
+        result = {}
+        prev_key = attributes[0]
+        for i in range(1, len(attributes)):
+            prev_val, next_key = attributes[i].rsplit("_", 1)
+            results[prev_key] = prev_val
+            prev_key = next_key
+
+        return result
+
+
+
 def create_session_paths(session_name, base_dir='/content/drive/My Drive'):
     models_dir = os.path.join(base_dir, 'models')
     session_dir = os.path.join(models_dir, session_name)
