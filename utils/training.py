@@ -32,11 +32,14 @@ class SessionManager:
     def parse_component(self, component):
         attributes = component.split("=")
         result = {}
+
         prev_key = attributes[0]
-        for i in range(1, len(attributes)):
+        for i in range(1, len(attributes) - 1):
             prev_val, next_key = attributes[i].rsplit("_", 1)
             result[prev_key] = prev_val
             prev_key = next_key
+        
+        result[prev_key] = attributes[-1]
 
         return result
 
