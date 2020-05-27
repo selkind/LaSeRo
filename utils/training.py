@@ -36,6 +36,9 @@ class SessionManager:
         prev_key = attributes[0]
         for i in range(1, len(attributes) - 1):
             prev_val, next_key = attributes[i].rsplit("_", 1)
+            if prev_key == 'bands':
+                prev_val = prev_val.split('-')[:-1]
+
             result[prev_key] = prev_val
             prev_key = next_key
         
