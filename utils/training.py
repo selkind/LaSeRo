@@ -54,13 +54,14 @@ def create_session_paths(session_name, base_dir='/content/drive/My Drive'):
 
     if not os.path.isdir(session_dir):
         os.makedirs(session_dir)
-    
+
     history = os.path.join(session_dir, 'history.json')
     training_log = os.path.join(session_dir, 'logs.csv')
     training_config = os.path.join(session_dir, 'config.json')
     classification_report = os.path.join(session_dir, 'classification_report.txt')
 
-    return {'history': history,
+    return {'session_dir': session_dir,
+            'history': history,
             'logs': training_log,
             'config': training_config,
             'classification_report': classification_report}
