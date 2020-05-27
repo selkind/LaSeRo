@@ -9,7 +9,7 @@ class SessionManager:
         self.metadata_dir = os.path.join(base_dir, 'Metadata')
         
     def build_input_components(self, data_set, bands, weights):
-        return f'data_set={data_set}_bands={self.build_band_string(bands)}_weights={weights}'
+        return f'dataset={data_set}_bands={self.build_band_string(bands)}_weights={weights}'
 
     def build_band_string(self, bands):
         band_string = ''
