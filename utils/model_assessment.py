@@ -96,10 +96,7 @@ class TestRegion:
         mosaics = {}
         
         for i in self.window:
-            if i == 'ryder_bay_abj':
-                scene_dir = os.path.join(output_dir, "LC82201072015017LGN0")
-            else:
-                scene_dir = os.path.join(output_dir, i)
+            scene_dir = os.path.join(output_dir, self.window[i]['source_scene_id'])
 
             if os.path.exists(scene_dir) and len(os.listdir(scene_dir)) > 0:
                 mosaics[i] = self.assemble_test_region_mosaic(scene_dir, self.window[i])
