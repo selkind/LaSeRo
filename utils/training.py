@@ -9,9 +9,9 @@ class SessionManager:
         self.metadata_dir = os.path.join(base_dir, 'Metadata')
         
     def build_input_components(self, data_set, bands, weights):
-        return f'dataset={data_set}_bands={self.build_band_string(bands)}_weights={weights}'
+        return f'dataset={data_set}_bands={self._build_band_string(bands)}_weights={weights}'
 
-    def build_band_string(self, bands):
+    def _build_band_string(self, bands):
         band_string = ''
         for i in bands:
             band_string += f'{i}-'
@@ -20,8 +20,14 @@ class SessionManager:
     def build_opt_components(self, opt_name, loss_function, learning_rate):
         return f'opt={opt_name}_loss={loss_function}_lr={learning_rate}'
 
-    def build_training_components(self, batch_size, epochs):
-        return f'batch={batch_size}_epochs={epochs}_'
+    def build_training_components(self, batch_size, epochs, class_weight):
+        return f'batch={batch_size}_epochs={epochs}_classweight={self._build_class_weight_string(class_weight)}_'
+
+    def _build_class_weight_string(self, class_weight):
+        weight = ''
+        for i in class_weight:
+            weight += f'{class_weight[i]}-'
+        return weight
 
     def build_lr_monitor_components(self, lr_monitor_metric, factor, lr_patience, min_lr):
         return f'lrmonitor={lr_monitor_metric}_factor={factor}_patience={lr_patience}_min={min_lr}_'
